@@ -40,6 +40,14 @@ class UserToolbarSwitchControllerEventListener extends BcControllerEventListener
 			return;
 		}
 		
+		if ($Controller->request->params['action'] == 'admin_add') {
+			App::uses('UserToolbarSwitch', 'UserToolbarSwitch.Model');
+			$UserToolbarSwitchModel = new UserToolbarSwitch();
+			$default = $UserToolbarSwitchModel->getDefaultValue();
+			$Controller->request->data['UserToolbarSwitch'] = $default['UserToolbarSwitch'];
+			return;
+		}
+		
 		if (isset($Controller->request->data['UserToolbarSwitch']) && empty($Controller->request->data['UserToolbarSwitch'])) {
 			App::uses('UserToolbarSwitch', 'UserToolbarSwitch.Model');
 			$UserToolbarSwitchModel = new UserToolbarSwitch();
