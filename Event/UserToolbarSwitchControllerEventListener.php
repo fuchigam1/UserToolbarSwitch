@@ -14,7 +14,6 @@ class UserToolbarSwitchControllerEventListener extends BcControllerEventListener
 	 * @var array
 	 */
 	public $events = array(
-		'initialize',
 		'Users.beforeRender',
 	);
 	
@@ -24,17 +23,6 @@ class UserToolbarSwitchControllerEventListener extends BcControllerEventListener
 	 * @var array
 	 */
 	private $targetAction = array('admin_edit', 'admin_add');
-	
-	/**
-	 * initialize
-	 * UserToolbarSwitch ヘルパーを追加する
-	 * 
-	 * @param CakeEvent $event
-	 */
-	public function initialize(CakeEvent $event) {
-		$Controller = $event->subject();
-		$Controller->helpers[] = 'UserToolbarSwitch.UserToolbarSwitch';
-	}
 	
 	/**
 	 * usersBeforeRender
