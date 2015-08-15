@@ -23,6 +23,15 @@ class UserToolbarSwitch extends BcPluginAppModel
 	public $plugin = 'UserToolbarSwitch';
 	
 	/**
+	 * Behavior
+	 * 
+	 * @var array
+	 */
+	public $actsAs = array(
+		'BcCache',
+	);
+	
+	/**
 	 * belongsTo
 	 * 
 	 * @var array
