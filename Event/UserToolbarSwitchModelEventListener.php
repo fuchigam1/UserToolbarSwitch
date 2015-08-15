@@ -62,7 +62,6 @@ class UserToolbarSwitchModelEventListener extends BcModelEventListener
 		if (!$Model->{$this->pluginModelName}->save($saveData)) {
 			$this->log(sprintf('ID：%s の'. $this->pluginModelName .'の保存に失敗しました。', $Model->data[$this->pluginModelName]['id']));
 		} else {
-			$Model->{$this->pluginModelName}->saveDblog('ユーザーID: ' . $saveData[$this->pluginModelName]['user_id'] . ' のツールバー設定を編集しました。');
 			clearAllCache();
 		}
 	}
