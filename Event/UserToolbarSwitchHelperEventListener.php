@@ -60,7 +60,7 @@ class UserToolbarSwitchHelperEventListener extends BcHelperEventListener
 		}
 		
 		if (in_array($event->data['id'], $this->targetFormId)) {
-			echo $View->element('UserToolbarSwitch.admin/user_toolbar_switch_form');
+			echo $View->element($this->plugin .'.admin/user_toolbar_switch_form');
 		}
 	}
 	

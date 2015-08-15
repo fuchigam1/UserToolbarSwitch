@@ -20,6 +20,13 @@ class UserToolbarSwitchModelEventListener extends BcModelEventListener
 	);
 	
 	/**
+	 * プラグインのモデル名
+	 * 
+	 * @var string
+	 */
+	private $pluginModelName = 'UserToolbarSwitch';
+	
+	/**
 	 * userBeforeFind
 	 * ユーザー情報取得の際に、UserToolbarSwitch 情報も併せて取得する
 	 * 
@@ -29,8 +36,8 @@ class UserToolbarSwitchModelEventListener extends BcModelEventListener
 	{
 		$Model = $event->subject();
 		$association = array(
-			'UserToolbarSwitch' => array(
-				'className' => 'UserToolbarSwitch.UserToolbarSwitch',
+			$this->pluginModelName => array(
+				'className' => $this->plugin .'.'. $this->pluginModelName,
 				'foreignKey' => 'user_id'
 			)
 		);
@@ -46,16 +53,16 @@ class UserToolbarSwitchModelEventListener extends BcModelEventListener
 	public function userAfterSave (CakeEvent $event)
 	{
 		$Model = $event->subject();
-		if (!isset($Model->data['UserToolbarSwitch']) || empty($Model->data['UserToolbarSwitch'])) {
+		if (!isset($Model->data[$this->pluginModelName]) || empty($Model->data[$this->pluginModelName])) {
 			return;
 		}
 		
-		$saveData['UserToolbarSwitch'] = $Model->data['UserToolbarSwitch'];
-		$saveData['UserToolbarSwitch']['user_id'] = $Model->id;
-		if (!$Model->UserToolbarSwitch->save($saveData)) {
-			$this->log(sprintf('ID：%s のUserToolbarSwitchの保存に失敗しました。', $Model->data['UserToolbarSwitch']['id']));
+		$saveData[$this->pluginModelName] = $Model->data[$this->pluginModelName];
+		$saveData[$this->pluginModelName]['user_id'] = $Model->id;
+		if (!$Model->{$this->pluginModelName}->save($saveData)) {
+			$this->log(sprintf('ID：%s の'. $this->pluginModelName .'の保存に失敗しました。', $Model->data[$this->pluginModelName]['id']));
 		} else {
-			$Model->UserToolbarSwitch->saveDblog('ユーザーID: ' . $saveData['UserToolbarSwitch']['user_id'] . ' のツールバー設定を編集しました。');
+			$Model->{$this->pluginModelName}->saveDblog('ユーザーID: ' . $saveData[$this->pluginModelName]['user_id'] . ' のツールバー設定を編集しました。');
 			clearAllCache();
 		}
 	}
@@ -69,13 +76,13 @@ class UserToolbarSwitchModelEventListener extends BcModelEventListener
 	public function userAfterDelete (CakeEvent $event)
 	{
 		$Model = $event->subject();
-		$data = $Model->UserToolbarSwitch->find('first', array(
-			'conditions' => array('UserToolbarSwitch.user_id' => $Model->id),
+		$data = $Model->{$this->pluginModelName}->find('first', array(
+			'conditions' => array($this->pluginModelName .'.user_id' => $Model->id),
 			'recursive' => -1
 		));
 		if ($data) {
-			if (!$Model->UserToolbarSwitch->delete($data['UserToolbarSwitch']['id'])) {
-				$this->log('ID:' . $data['UserToolbarSwitch']['id'] . 'のUserToolbarSwitchの削除に失敗しました。');
+			if (!$Model->{$this->pluginModelName}->delete($data[$this->pluginModelName]['id'])) {
+				$this->log('ID:' . $data[$this->pluginModelName]['id'] . 'の'. $this->pluginModelName .'の削除に失敗しました。');
 			}
 		}
 	}
