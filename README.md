@@ -1,7 +1,7 @@
 # ユーザーツールバースウィッチ プラグイン
 ユーザーツールバースウィッチ プラグインは、ユーザー別にツールバー表示・非表示を選択し、設定できるbaserCMS専用のプラグインです。
 
-- [Summary: Wiki](https://github.com/materializing/UserToolbarSwitch)
+- [Summary: Wiki](https://github.com/materializing/UserToolbarSwitch/wiki)
 
 ## Installation
 1. 圧縮ファイルを解凍後、BASERCMS/app/Plugin/UserToolbarSwitch に配置します。
